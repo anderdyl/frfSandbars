@@ -342,60 +342,6 @@ for timestep in range(len(timeind)):
     eofPred2og[timestep, :] = RS[timestep, mode]* SS[:, mode] * np.cos(phitS[timestep, mode] - thetaS[:, mode])
 
 
-t1 = 0
-t2 = -1
-fig = plt.figure(figsize=(14,10))
-#plt.set_cmap('RdBu')#bwr')
-plt.set_cmap('RdBu_r')
-
-tg, xg = np.meshgrid(time, xinterp)
-# ax1 = plt.subplot2grid((4,4),(0,0),rowspan=4,colspan=1)
-# plt0 = ax1.pcolor(xg,tg,(alllines-np.mean(alllines, axis=0)).T, vmin=-1.8, vmax=1.8)
-# fig.colorbar(plt0, ax=ax1, orientation='horizontal')
-# ax1.set_ylim([time[t1], time[t2]])
-# ax1.set_title('Surveys (dev.)')
-
-ax2 = plt.subplot2grid((7,4),(0,0),rowspan=7,colspan=1)
-plt1 = ax2.pcolor(xg,tg,eofPredog.T, vmin=-.75, vmax=0.75)
-ax2.set_ylim([time[t1], time[t2]])
-#fig.colorbar(plt1, ax=ax2, orientation='horizontal')
-ax2.set_title('Mode 1 (40% of variance)',fontsize=18)
-ax2.get_yaxis().set_ticks([])
-
-ax3 = plt.subplot2grid((7,4),(0,1),rowspan=7,colspan=1)
-plt2 = ax3.pcolor(xg,tg,eofPred2og.T, vmin=-.85, vmax=.85)
-ax3.set_ylim([time[t1], time[t2]])
-#fig.colorbar(plt2, ax=ax3, orientation='horizontal')
-ax3.set_title('Mode 2 (25% of variance)',fontsize=18)
-ax3.get_yaxis().set_ticks([])
-
-plt.show()
-
-
-
-# fig, ax = plt.subplots(2,2)
-# mode = 0
-# ax[0,0].scatter(xinterpS, SS[:,mode],16,theta2S[:,mode],cmap=cmap)
-# ax[0,0].set_title('Mode 1 (40% of variance)',fontsize=24)
-# ax[0,0].set_ylabel('Spatial Magnitude (m)',fontsize=18)
-# ax[0,0].set_xlabel('Cross-shore (m)',fontsize=14)
-# ax[1,0].scatter(xinterpS, theta2S[:,mode],12,theta2S[:,mode],cmap=cmap)
-# ax[1,0].set_ylabel('Spatial Phase (deg)',fontsize=18)
-# ax[1,0].set_xlabel('Cross-shore (m)',fontsize=14)
-#
-# mode = 1
-# ax[0,1].scatter(xinterpS, SS[:,mode],16,theta2S[:,mode],cmap=cmap)
-# ax[0,1].set_title('Mode 2 (25% of variance)',fontsize=24)
-# ax[0,1].set_ylabel('Spatial Magnitude (m)',fontsize=18)
-# ax[0,1].set_xlabel('Cross-shore (m)',fontsize=14)
-# ax[1,1].scatter(xinterpS, theta2S[:,mode],12,theta2S[:,mode],cmap=cmap)
-# ax[1,1].set_ylabel('Spatial Phase (deg)',fontsize=18)
-# ax[1,1].set_xlabel('Cross-shore (m)',fontsize=14)
-#
-
-
-
-
 
 thetasMode1 = np.arange(0,1200,5)
 thetasMode2 = np.arange(0,1200,5)
@@ -413,7 +359,6 @@ thetag, xintg = np.meshgrid(thetasMode1, xinterpS)
 
 
 
-
 t1 = 0
 t2 = -1
 fig = plt.figure(figsize=(14,10))
@@ -421,22 +366,22 @@ fig = plt.figure(figsize=(14,10))
 # plt.set_cmap('RdBu_r')
 
 tg, xg = np.meshgrid(time, xinterp)
-ax2 = plt.subplot2grid((7,3),(0,0),rowspan=7,colspan=1)
+ax2 = plt.subplot2grid((7,4),(0,0),rowspan=7,colspan=1)
 plt1 = ax2.pcolor(xg,tg,eofPredog.T, vmin=-.75, vmax=0.75,cmap='bwr')
 ax2.set_ylim([time[t1], time[t2]])
 #fig.colorbar(plt1, ax=ax2, orientation='horizontal')
 # ax2.set_title('Observed Offshore CEOF: {:.2f}%'.format(percentVS[0]))
-ax2.set_title('Observed Offshore CEOF (40% of variance)',fontsize=12)
+ax2.set_title('Offshore CEOF (40%)',fontsize=12)
 # ax2.get_yaxis().set_ticks([])
 ax2.set_xlabel('Cross-shore (m)')
 ax2.text(-0.1, 1.01, 'a.', transform=ax2.transAxes, size=14, weight='bold')
 
-ax3 = plt.subplot2grid((7,3),(0,1),rowspan=7,colspan=1)
+ax3 = plt.subplot2grid((7,4),(0,1),rowspan=7,colspan=1)
 plt2 = ax3.pcolor(xg,tg,eofPred2og.T, vmin=-.85, vmax=.85,cmap='bwr')
 ax3.set_ylim([time[t1], time[t2]])
 #fig.colorbar(plt2, ax=ax3, orientation='horizontal')
 # ax3.set_title('Observed Onshore CEOF: {:.2f}%'.format(percentVS[1]))
-ax3.set_title('Observed Onshore CEOF (25% of variance)',fontsize=12)
+ax3.set_title('Onshore CEOF (25%)',fontsize=12)
 
 # ax3.get_yaxis().set_ticks([])
 ax3.set_xlabel('Cross-shore (m)')
@@ -444,15 +389,17 @@ ax3.text(-0.1, 1.01, 'b.', transform=ax3.transAxes, size=14, weight='bold')
 
 
 
-ax1 = plt.subplot2grid((7,3),(0,2),rowspan=3,colspan=1)
+ax1 = plt.subplot2grid((7,4),(0,2),rowspan=3,colspan=1)
 ax1b = ax1.twinx()
 plt0 = ax1.pcolor(xintg,thetag,eofHypo.T, vmin=-0.75, vmax=0.75, cmap='bwr')
+ax1.plot(xintg[:,0],360*np.ones((len(xintg[:,0],))),'--',color='orange')
+ax1.plot(xintg[:,0],180*np.ones((len(xintg[:,0],))),'--',color='green')
 plt0b = ax1b.plot(range(1200),np.ones(1200))
 ax1b.cla()
 ax1b.set_ylim(0,810)
 ax1.set_ylim(0,810)
 ax1b.set_yticks([0,98,196,294,392,490,589,687,785])
-ax1b.set_yticklabels(['0','','1 year','','2 years','','3 years','','4 years'])
+ax1b.set_yticklabels(['0','','1 yr','','2 yrs','','3 yrs','','4 yrs'])
 ax1b.set_ylabel('Average Time Elapsed',fontsize=12)
 ax1.set_title(r'Offshore Migration $\Longrightarrow$',fontsize=12)
 # ax1.set_ylabel('Cross-shore (m, distance from shoreline)',fontsize=12)
@@ -462,17 +409,19 @@ ax1.set_xlim(0,510)
 ax1.text(-0.05, 1.045, 'c.', transform=ax1.transAxes, size=14, weight='bold')
 
 
-ax22 = plt.subplot2grid((7,3),(3,2),rowspan=3,colspan=1)
+ax22 = plt.subplot2grid((7,4),(3,2),rowspan=3,colspan=1)
 ax22b = ax22.twinx()
 plt12 = ax22.pcolor(xintg,thetag,eofHypo2.T, vmin=-0.75, vmax=0.75, cmap='bwr')
+ax22.plot(xintg[:,0],20*np.ones((len(xintg[:,0],))),'--',color='orange')
+ax22.plot(xintg[:,0],240*np.ones((len(xintg[:,0],))),'--',color='green')
 plt22b = ax22b.plot(range(1200),np.ones(1200))
 ax22b.cla()
 ax22b.set_yticks([0,132,263,394,525,656,788,920,1052])
-ax22b.set_yticklabels(['0','','1 year','','2 years','','3 years','','4 years'])
+ax22b.set_yticklabels(['0','','1 yr','','2 yrs','','3 yrs','','4 yrs'])
 ax22b.set_ylabel('Average Time Elapsed',fontsize=12)
 ax22.set_ylabel('Phase (deg)',fontsize=12)
 ax22.set_title(r'Onshore Migration $\Longleftarrow$',fontsize=12)
-ax22.set_xlabel('Cross-shore (m, distance from shoreline)',fontsize=12)
+ax22.set_xlabel('Cross-shore',fontsize=12)
 
 ax22.set_ylim([0,1100])
 ax22b.set_ylim(0,1100)
@@ -481,11 +430,29 @@ ax22.set_xlim([0,510])
 #ax4 = plt.subplot2grid((7,3),(6,2),rowspan=1,colspan=1)
 #cb = fig.colorbar(plt12,ax=ax4)
 
-cbar_ax = fig.add_axes([0.71, 0.1, 0.2, 0.03])
+# cbar_ax = fig.add_axes([0.71, 0.1, 0.2, 0.03])
+cbar_ax = fig.add_axes([0.58, 0.1, 0.12, 0.03])
+
 cb1c = plt.colorbar(plt12, cax=cbar_ax, orientation='horizontal')
 cb1c.set_label('Difference from Mean (m)')
 
 ax22.text(-0.05, 1.03, 'd.', transform=ax22.transAxes, size=14, weight='bold')
+
+
+
+ax31 = plt.subplot2grid((7,4),(0,3),rowspan=3,colspan=1)
+ax31.plot(xintg[:,0],eofHypo2.T[:,0]+eofHypo.T[:,4]+np.mean(alllinesS,axis=0),color='orange')
+ax31.set_ylabel('Depth (m)')
+ax31.set_title('Example Profile Reconstruction',fontsize=12)
+ax31.text(-0.18, 1.03, 'e.', transform=ax31.transAxes, size=14, weight='bold')
+
+ax32 = plt.subplot2grid((7,4),(3,3),rowspan=3,colspan=1)
+ax32.plot(xintg[:,0],eofHypo2.T[:,44]+eofHypo.T[:,36]+np.mean(alllinesS,axis=0),color='green')
+ax32.set_title('Example Profile Reconstruction',fontsize=12)
+ax32.set_ylabel('Depth (m)')
+ax32.set_xlabel('Cross-shore (m)')
+ax32.text(-0.18, 1.03, 'f.', transform=ax32.transAxes, size=14, weight='bold')
+
 
 plt.tight_layout()
 plt.show()

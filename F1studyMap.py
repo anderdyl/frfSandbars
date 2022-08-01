@@ -70,6 +70,7 @@ dy = y_head - y_tail
 arrow = mpatches.FancyArrowPatch((x_tail, y_tail), (x_head, y_head),
                                  mutation_scale=16,color="k")
 ax2.add_patch(arrow)
+ax2.text(-0.05, 1.03, 'a.', transform=ax2.transAxes, size=14, weight='bold')
 
 
 import pickle
@@ -98,6 +99,7 @@ ax3.set_xlim([0, 500])
 ax3.set_ylim([-7.5, 1])
 ax3.set_ylabel('Elevation (m, MHHW)')
 ax3.set_xlabel('Cross-shore (m)')
+ax3.text(-0.05, 1.03, 'b.', transform=ax3.transAxes, size=14, weight='bold')
 
 plt.set_cmap('RdBu_r')
 
@@ -111,6 +113,7 @@ cbaxes.set_xlabel('Elevation Anomaly (m)')
 ax4.set_ylabel('Cross-shore (m)')
 import datetime as DT
 ax4.set_xlim([DT.datetime(1981,1,1),DT.datetime(2020,12,1)])
+ax4.text(-0.05, 1.03, 'c.', transform=ax4.transAxes, size=14, weight='bold')
 
 
 
@@ -313,6 +316,7 @@ ax5.plot(tC[(15*24):-(15*24)+1],monthlyfV,'k')
 ax5.set_xlim([DT.datetime(1981,1,1),DT.datetime(2020,12,1)])
 ax5.set_ylabel('$\Omega$')
 ax5.set_xlabel('Time')
+ax5.text(-0.05, 1.03, 'd.', transform=ax5.transAxes, size=14, weight='bold')
 
 
 
