@@ -4,5 +4,7 @@
 
 Codes in this repo process topo-bathy surveys from the Field Research Facility to assess sandbar dynamics observed since 1980.
 
-![image](https://github.com/anderdyl/frfSandbars/figure1.png)
+![image](https://github.com/anderdyl/frfSandbars/blob/master/figure1.png)
+
+
 
