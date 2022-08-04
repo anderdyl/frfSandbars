@@ -487,7 +487,7 @@ doublebar[singleIndex] = 0.25
 
 
 # plt.style.use('dark_background')
-fig = plt.figure(figsize=(12,14))
+fig = plt.figure(figsize=(10,11))
 
 
 
@@ -558,20 +558,54 @@ ax3.set_xlabel(r'Offshore (deg) $\Longrightarrow$')
 ax3.set_ylabel(r'Onshore (deg) $\Longrightarrow$')
 
 plt.subplots_adjust(right=0.87)
-cbar_ax = fig.add_axes([0.91, 0.72, 0.02, 0.15])
+cbar_ax = fig.add_axes([0.91, 0.28, 0.02, 0.13])
 cb1c = plt.colorbar(p1c,cax=cbar_ax)
-cb1c.set_label('Distance from shoreline (m)')
+cb1c.set_label('Dist. from shore (m)')
 
-cbar_ax2 = fig.add_axes([0.91, 0.52, 0.02, 0.15])
+cbar_ax2 = fig.add_axes([0.91, 0.11, 0.02, 0.13])
 cb1c2 = plt.colorbar(p4c,cax=cbar_ax2)
 cb1c2.set_label('Bar Magnitude (m)')
 
 
-conceptbar_ax = fig.add_axes([0.3, 0.05, 0.4, 0.4])
+conceptbar_ax = fig.add_axes([0.55, 0.55, 0.4, 0.4])
 #conceptbar_ax = plt.subplot2grid((5,3),(0,1),rowspan=3,colspan=2)
 con = conceptbar_ax.pcolor(meshTheta1,meshTheta2,doublebar,vmin=0,vmax=1,cmap='Greys')
 conceptbar_ax.set_xlabel(r'Offshore (deg) $\Longrightarrow$')
 conceptbar_ax.set_ylabel(r'Onshore (deg) $\Longrightarrow$')
+conceptbar_ax.set_title('Morphologic Trends')
+
+
+conceptbar_ax.arrow(x=250,y=-20,dx=0,dy=50,width=4,facecolor='black',edgecolor='black')
+conceptbar_ax.text(262,20,'Shallow Single')
+conceptbar_ax.text(262,0, 'Bar Growth')
+
+conceptbar_ax.arrow(x=80,y=100,dx=0,dy=135,width=4,facecolor='orange',edgecolor='orange')
+
+conceptbar_ax.arrow(x=110,y=70,dx=100,dy=0,width=4,facecolor='blue',edgecolor='blue')
+conceptbar_ax.text(120,80,'Inner Bar Growth')
+conceptbar_ax.text(120,50, 'Outer Bar Decay')
+
+conceptbar_ax.arrow(x=110,y=220,dx=100,dy=0,width=4,facecolor='black',edgecolor='black')
+conceptbar_ax.text(120,250,'Double Bar to')
+conceptbar_ax.text(120,230, 'Double Terrace')
+
+conceptbar_ax.arrow(x=80,y=0,dx=0,dy=40,width=4,facecolor='black',edgecolor='black')
+conceptbar_ax.arrow(x=80,y=0,dx=40,dy=0,width=4,facecolor='black',edgecolor='black')
+conceptbar_ax.text(90,30,'New Inner Bar')
+conceptbar_ax.text(90,10, 'Formation')
+
+conceptbar_ax.arrow(x=200,y=100,dx=0,dy=40,width=4,facecolor='black',edgecolor='black')
+conceptbar_ax.arrow(x=200,y=100,dx=40,dy=0,width=4,facecolor='green',edgecolor='green')
+conceptbar_ax.text(210,130,'Outer Bar')
+conceptbar_ax.text(210,110, 'Death')
+
+conceptbar_ax.arrow(x=290,y=60,dx=0,dy=40,width=4,facecolor='black',edgecolor='black')
+conceptbar_ax.arrow(x=290,y=60,dx=40,dy=0,width=4,facecolor='black',edgecolor='black')
+
+conceptbar_ax.arrow(x=250,y=230,dx=0,dy=40,width=4,facecolor='black',edgecolor='black')
+conceptbar_ax.arrow(x=250,y=230,dx=40,dy=0,width=4,facecolor='black',edgecolor='black')
+conceptbar_ax.text(262,265,'Single Bar from')
+conceptbar_ax.text(262,245, 'Inner Terrace')
 
 # conceptbar_ax.set_xlim([-180,180])
 # conceptbar_ax.set_ylim([-100,260])
