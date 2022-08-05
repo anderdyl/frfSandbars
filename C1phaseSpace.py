@@ -9,13 +9,9 @@ from scipy.interpolate import interp1d
 import scipy.io
 from matplotlib import gridspec
 import pickle
-
-
-
 import datetime as DT
 import numpy as np
 import peakutils, os
-from matplotlib import pyplot as plt
 from scipy import signal
 
 
@@ -469,6 +465,7 @@ plt.show()
 
 
 
+
 import copy
 doublebar = copy.deepcopy(outerBarX)
 doubleIndex = np.where((doublebar > 0))
@@ -488,126 +485,229 @@ doublebar[singleIndex] = 0.25
 
 # plt.style.use('dark_background')
 fig = plt.figure(figsize=(10,11))
-
-
-
-
 ax1 = plt.subplot2grid((5,3),(3,0),rowspan=1,colspan=1)
 p1 = ax1.pcolor(meshTheta1,meshTheta2,innerBarX,vmin=30,vmax=300,cmap='plasma')
+ax1.text(0.04, .85, 'e.', transform=ax1.transAxes, size=14, weight='bold')
+
 # ax1.set_xlim([-180,180])
 # ax1.set_ylim([-100,260])
-
 # cb1 = plt.colorbar(p1,ax=ax1)
 # cb1.set_label('xFRF')
 # ax1.text(50,200,'Location')
-
 ax2 = plt.subplot2grid((5,3),(3,1),rowspan=1,colspan=1)
 p2 = ax2.pcolor(meshTheta1,meshTheta2,outerBarX,vmin=30,vmax=300,cmap='plasma')
+ax2.text(0.04, .85, 'f.', transform=ax2.transAxes, size=14, weight='bold')
+
 # ax2.set_xlim([-180,180])
 # ax2.set_ylim([-100,260])
-
 # ax2.text(50,200,'Location')
-
 # ax2.set_xlabel('Mode 1 Phase')
 # ax1.set_xlabel('Mode 1 Phase')
 # ax3.set_xlabel('Mode 1 Phase')
 # ax1.set_ylabel('Mode 2 Phase')
 ax1.set_ylabel(r'Onshore (deg) $\Longrightarrow$')
-
 ax1.set_title('Inner Bar',fontsize=12)
 ax2.set_title('Outer Bar',fontsize=12)
-
 # cb2 = plt.colorbar(p2,ax=ax2)
 # cb2.set_label('xFRF')
 ax1c = plt.subplot2grid((5,3),(3,2),rowspan=1,colspan=1)
 p1c = ax1c.pcolor(meshTheta1,meshTheta2,innerOuterBarX,vmin=30,vmax=300,cmap='plasma')
+ax1c.text(0.04, .85, 'g.', transform=ax1c.transAxes, size=14, weight='bold',color='white')
+
 # ax1c.set_xlim([-180,180])
 # ax1c.set_ylim([-100,260])
-
-
 # cb1c = plt.colorbar(p1c,ax=ax1c)
 # cb1c.set_label('xFRF')
 ax1c.set_title('Single Bar',fontsize=12)
-
 ax3 = plt.subplot2grid((5,3),(4,0),rowspan=1,colspan=1)
 p3 = ax3.pcolor(meshTheta1,meshTheta2,innerBarDZ,vmin=0,vmax=1)
+ax3.text(0.04, .85, 'h.', transform=ax3.transAxes, size=14, weight='bold')
+
 # ax3.set_xlim([-180,180])
 # ax3.set_ylim([-100,260])
-
 # cb3 = plt.colorbar(p3,ax=ax3)
 # cb3.set_label('Depth (m)')
 # ax3.text(50,200,'Magnitude')
-
 ax4 = plt.subplot2grid((5,3),(4,1),rowspan=1,colspan=1)
 p4 = ax4.pcolor(meshTheta1,meshTheta2,outerBarDZ,vmin=0,vmax=1)
+ax4.text(0.04, .85, 'i.', transform=ax4.transAxes, size=14, weight='bold')
+
 # ax4.set_xlim([-180,180])
 # ax4.set_ylim([-100,260])
-
 # cb4 = plt.colorbar(p4,ax=ax4)
 # cb4.set_label('Depth (m)')
 # ax4.text(50,200,'Magnitude')
-
 ax4c = plt.subplot2grid((5,3),(4,2),rowspan=1,colspan=1)
 p4c = ax4c.pcolor(meshTheta1,meshTheta2,innerOuterBarDZ,vmin=0,vmax=1)
+ax4c.text(0.04, .85, 'j.', transform=ax4c.transAxes, size=14, weight='bold',color='white')
+
 # ax4c.set_xlim([-180,180])
 # ax4c.set_ylim([-100,260])
-
 ax4c.set_xlabel(r'Offshore (deg) $\Longrightarrow$')
 ax4.set_xlabel(r'Offshore (deg) $\Longrightarrow$')
 ax3.set_xlabel(r'Offshore (deg) $\Longrightarrow$')
 ax3.set_ylabel(r'Onshore (deg) $\Longrightarrow$')
-
 plt.subplots_adjust(right=0.87)
 cbar_ax = fig.add_axes([0.91, 0.28, 0.02, 0.13])
 cb1c = plt.colorbar(p1c,cax=cbar_ax)
 cb1c.set_label('Dist. from shore (m)')
-
 cbar_ax2 = fig.add_axes([0.91, 0.11, 0.02, 0.13])
 cb1c2 = plt.colorbar(p4c,cax=cbar_ax2)
 cb1c2.set_label('Bar Magnitude (m)')
 
+xMesh,yMesh = np.meshgrid(np.arange(0,1,0.1),np.arange(0,1,0.1))
+label1 = np.zeros((np.shape(xMesh)))
+shade1_ax = fig.add_axes([0.46,0.45,0.15,0.02])
+shade1_ax.pcolor(xMesh,yMesh,label1,vmin=0,vmax=1,cmap='Greys')
+shade1_ax.set_xticklabels('')
+shade1_ax.set_yticklabels('')
+shade1_ax.set_yticks([])
+shade1_ax.set_xticks([])
+shade1_ax.text(0.05,0.2,'Terrace (no bar)',weight='bold')
 
-conceptbar_ax = fig.add_axes([0.55, 0.55, 0.4, 0.4])
+label2 = 0.25 * np.ones((np.shape(xMesh)))
+shade2_ax = fig.add_axes([0.64,0.45,0.15,0.02])
+shade2_ax.pcolor(xMesh,yMesh,label2,vmin=0,vmax=1,cmap='Greys')
+shade2_ax.set_xticklabels('')
+shade2_ax.set_yticklabels('')
+shade2_ax.set_xticks([])
+shade2_ax.set_yticks([])
+shade2_ax.text(0.2,0.2,'Single Bar',weight='bold')
+
+label3 = 0.5 * np.ones((np.shape(xMesh)))
+shade3_ax = fig.add_axes([0.82,0.45,0.15,0.02])
+shade3_ax.pcolor(xMesh,yMesh,label3,vmin=0,vmax=1,cmap='Greys')
+shade3_ax.set_xticklabels('')
+shade3_ax.set_yticklabels('')
+shade3_ax.set_xticks([])
+shade3_ax.set_yticks([])
+shade3_ax.text(0.2,0.2,'Double Bar',weight='bold')
+
+
+
+
+conceptbar_ax = fig.add_axes([0.48, 0.52, 0.48, 0.45])
 #conceptbar_ax = plt.subplot2grid((5,3),(0,1),rowspan=3,colspan=2)
 con = conceptbar_ax.pcolor(meshTheta1,meshTheta2,doublebar,vmin=0,vmax=1,cmap='Greys')
 conceptbar_ax.set_xlabel(r'Offshore (deg) $\Longrightarrow$')
 conceptbar_ax.set_ylabel(r'Onshore (deg) $\Longrightarrow$')
 conceptbar_ax.set_title('Morphologic Trends')
-
-
 conceptbar_ax.arrow(x=250,y=-20,dx=0,dy=50,width=4,facecolor='black',edgecolor='black')
-conceptbar_ax.text(262,20,'Shallow Single')
-conceptbar_ax.text(262,0, 'Bar Growth')
-
+conceptbar_ax.text(262,15,'Shallow Single')#,weight='bold')
+conceptbar_ax.text(262,0, 'Bar Growth')#,weight='bold')
 conceptbar_ax.arrow(x=80,y=100,dx=0,dy=135,width=4,facecolor='orange',edgecolor='orange')
+conceptbar_ax.text(52,120, 'Inner Bar Decay',rotation=90)
+conceptbar_ax.text(65,120, 'Outer Bar Maintained', rotation=90)
+conceptbar_ax.text(88,120, 'Faster Inner Bar Migration', rotation=90)
 
 conceptbar_ax.arrow(x=110,y=70,dx=100,dy=0,width=4,facecolor='blue',edgecolor='blue')
-conceptbar_ax.text(120,80,'Inner Bar Growth')
-conceptbar_ax.text(120,50, 'Outer Bar Decay')
-
+conceptbar_ax.text(120,80,'Inner Bar Growth')#,weight='bold')
+conceptbar_ax.text(120,52, 'Outer Bar Decay')#,weight='bold')
 conceptbar_ax.arrow(x=110,y=220,dx=100,dy=0,width=4,facecolor='black',edgecolor='black')
-conceptbar_ax.text(120,250,'Double Bar to')
-conceptbar_ax.text(120,230, 'Double Terrace')
-
+conceptbar_ax.text(120,245,'Double Bar to')#,weight='bold')
+conceptbar_ax.text(120,230, 'Double Terrace')#,weight='bold')
 conceptbar_ax.arrow(x=80,y=0,dx=0,dy=40,width=4,facecolor='black',edgecolor='black')
 conceptbar_ax.arrow(x=80,y=0,dx=40,dy=0,width=4,facecolor='black',edgecolor='black')
-conceptbar_ax.text(90,30,'New Inner Bar')
-conceptbar_ax.text(90,10, 'Formation')
-
+conceptbar_ax.text(90,25,'New Inner Bar')#,weight='bold')
+conceptbar_ax.text(90,10, 'Formation')#,weight='bold')
 conceptbar_ax.arrow(x=200,y=100,dx=0,dy=40,width=4,facecolor='black',edgecolor='black')
 conceptbar_ax.arrow(x=200,y=100,dx=40,dy=0,width=4,facecolor='green',edgecolor='green')
-conceptbar_ax.text(210,130,'Outer Bar')
-conceptbar_ax.text(210,110, 'Death')
-
+conceptbar_ax.text(210,125,'Outer Bar')#,weight='bold')
+conceptbar_ax.text(210,110, 'Death')#,weight='bold')
 conceptbar_ax.arrow(x=290,y=60,dx=0,dy=40,width=4,facecolor='black',edgecolor='black')
 conceptbar_ax.arrow(x=290,y=60,dx=40,dy=0,width=4,facecolor='black',edgecolor='black')
-
 conceptbar_ax.arrow(x=250,y=230,dx=0,dy=40,width=4,facecolor='black',edgecolor='black')
 conceptbar_ax.arrow(x=250,y=230,dx=40,dy=0,width=4,facecolor='black',edgecolor='black')
-conceptbar_ax.text(262,265,'Single Bar from')
-conceptbar_ax.text(262,245, 'Inner Terrace')
+conceptbar_ax.text(262,260,'Single Bar from')#,weight='bold')
+conceptbar_ax.text(262,245, 'Inner Terrace')#,weight='bold')
+conceptbar_ax.text(-0.05, 1.02, 'd.', transform=conceptbar_ax.transAxes, size=14, weight='bold')
 
+
+#ax31 = plt.subplot2grid((7,4),(0,3),rowspan=3,colspan=1)
+ax31 = fig.add_axes([0.13,0.82,0.27,0.145])
+# ax31.plot(xintg[:,0],eofHypo2.T[:,0]+eofHypo.T[:,4]+np.mean(alllinesS,axis=0),color='orange')
+ax31.set_ylabel('Depth (m)')
+# ax31.set_title('Example Profile Reconstruction',fontsize=12)
+# ax31.text(-0.18, 1.03, 'e.', transform=ax31.transAxes, size=14, weight='bold')
+ax31.set_xticklabels('')
+thetaMode2 =60
+eofPred2 = SS[:,1]*np.nanmean(RS[:,1]) * np.cos(thetaMode2*np.pi/180 - thetaS[:,1])
+thetaMode1 = np.arange(100,210,10)
+import matplotlib.cm as cm
+colors = cm.rainbow(np.linspace(0, 1, len(thetaMode1)))
+for ii in range(len(thetaMode1)):
+   eofPred = SS[:,0] * np.nanmean(RS[:, 0]) * np.cos(thetaMode1[ii]*np.pi/180 - thetaS[:, 0])
+   combined = np.mean(alllinesS,axis=0)+eofPred+eofPred2
+   if ii == 0:
+        ax31.plot(xinterp,combined,color=colors[ii,:],label='Initial Profile')
+   elif ii == len(thetaMode1)-1:
+       ax31.plot(xinterp, combined, color=colors[ii, :],label='Final Profile')
+   else:
+       ax31.plot(xinterp, combined, color=colors[ii, :])
+ax31.spines["bottom"].set_linewidth(3)
+ax31.spines["top"].set_linewidth(3)
+ax31.spines["left"].set_linewidth(3)
+ax31.spines["right"].set_linewidth(3)
+ax31.spines["bottom"].set_color('blue')
+ax31.spines["top"].set_color('blue')
+ax31.spines["left"].set_color('blue')
+ax31.spines["right"].set_color('blue')
+ax31.legend()
+ax31.text(-0.18, 1.02, 'a.', transform=ax31.transAxes, size=14, weight='bold')
+
+
+ax32 = fig.add_axes([0.13,0.66,0.27,0.145])
+# ax32.plot(xintg[:,0],eofHypo2.T[:,0]+eofHypo.T[:,4]+np.mean(alllinesS,axis=0),color='orange')
+ax32.set_ylabel('Depth (m)')
+ax32.set_xticklabels('')
+
+thetaMode2 =75
+eofPred2 = SS[:,0]*np.nanmean(RS[:,0]) * np.cos(thetaMode2*np.pi/180 - thetaS[:,0])
+thetaMode1 = np.arange(120,270,10)
+import matplotlib.cm as cm
+colors = cm.rainbow(np.linspace(0, 1, len(thetaMode1)))
+for ii in range(len(thetaMode1)):
+   eofPred = SS[:,1] * np.nanmean(RS[:, 1]) * np.cos(thetaMode1[ii]*np.pi/180 - thetaS[:, 1])
+   combined = np.mean(alllinesS,axis=0)+eofPred+eofPred2
+   ax32.plot(xinterp,combined,color=colors[ii,:],label=r'$\phi_1$ = {}'.format(thetaMode1[ii]))
+ax32.spines["bottom"].set_linewidth(3)
+ax32.spines["top"].set_linewidth(3)
+ax32.spines["left"].set_linewidth(3)
+ax32.spines["right"].set_linewidth(3)
+ax32.spines["bottom"].set_color('orange')
+ax32.spines["top"].set_color('orange')
+ax32.spines["left"].set_color('orange')
+ax32.spines["right"].set_color('orange')
+#ax1c.legend()
+# ax1c.set_title(r'2a. Stationary $\phi_2$ = {} + Propagating Offshore Signal'.format(thetaMode2))
+ax32.text(-0.18, 1.02, 'b.', transform=ax32.transAxes, size=14, weight='bold')
+
+
+ax33 = fig.add_axes([0.13,0.5,0.27,0.145])
+# ax33.plot(xintg[:,0],eofHypo2.T[:,0]+eofHypo.T[:,4]+np.mean(alllinesS,axis=0),color='orange')
+ax33.set_ylabel('Depth (m)')
+ax33.set_xlabel('Cross-shore (m)')
+thetaMode2 =70
+eofPred2 = SS[:,1]*np.nanmean(RS[:,1]) * np.cos(thetaMode2*np.pi/180 - thetaS[:,1])
+thetaMode1 = np.arange(190,290,10)
+import matplotlib.cm as cm
+colors = cm.rainbow(np.linspace(0, 1, len(thetaMode1)))
+for ii in range(len(thetaMode1)):
+   eofPred = SS[:,0] * np.nanmean(RS[:, 0]) * np.cos(thetaMode1[ii]*np.pi/180 - thetaS[:, 0])
+   combined = np.mean(alllinesS,axis=0)+eofPred+eofPred2
+   ax33.plot(xinterp,combined,color=colors[ii,:],label=r'$\phi_1$ = {}'.format(thetaMode1[ii]))
+
+ax33.spines["bottom"].set_linewidth(3)
+ax33.spines["top"].set_linewidth(3)
+ax33.spines["left"].set_linewidth(3)
+ax33.spines["right"].set_linewidth(3)
+ax33.spines["bottom"].set_color('green')
+ax33.spines["top"].set_color('green')
+ax33.spines["left"].set_color('green')
+ax33.spines["right"].set_color('green')
+ax33.text(-0.18, 1.02, 'c.', transform=ax33.transAxes, size=14, weight='bold')
+
+plt.show()
 # conceptbar_ax.set_xlim([-180,180])
 # conceptbar_ax.set_ylim([-100,260])
 # plt.tight_layout()
-plt.show()
