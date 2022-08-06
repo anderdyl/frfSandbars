@@ -25,8 +25,14 @@ All transects where subsequently aligned such that the origin of the profile beg
 Loading, extracting transects in the area of interest, and averaging in the alongshore with accomplished with [A1loadExtractData.py](./A1loadExtractData.py).
 
 Wave data is also freely available at the Coastal & Hydraulics Laboratory [THREDDS Server](https://chldata.erdc.dren.mil/).
+See [getDataFRF.py](https://github.com/erdc/getdatatestbed) for functions to automatically download all FRF-related observations from the server. 
+The above figure showing all data used in this study can be generated with [F1studyMap.py](./F1studyMap.py) using either the provided 'sandbarsSouthernTransect' file or by running [AlloadExtractData.py](./A1loadExtractData.py) to generate a new binary file from a directory of FRF data files (for example, with newer surveys since July 2022).
+
 
 ### Complex EOFs
+
+Complex EOFs are applied to the dataset of cross-shore profiles using [B1complexEOFs.py](./B1complexEOFs.py)
+
 
 ![image](https://github.com/anderdyl/frfSandbars/blob/master/figure2.png)
 
@@ -35,3 +41,12 @@ Constructive interference of the two modes results in a profile reconstruction, 
 
 
 ![image](https://github.com/anderdyl/frfSandbars/blob/master/figure3.png)
+
+
+
+![image](https://github.com/anderdyl/frfSandbars/blob/master/conceptualFlowchart.png)
+
+### Files
+[A1loadExtractData.py](./A1loadExtractData.py) For loading, averaging, interpolating transects from a directory of netcdf files containing FRF survey transects.
+[B1complexEOFs.py](./B1complexEOFs.py) For applying CEOFs to the geomorphology data set.
+[C1phaseSpace.py](./C1phaseSpace.py) For identifying profile characteristics for all interferences of the dominant two modes of sandbar migration.
