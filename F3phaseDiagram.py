@@ -45,7 +45,7 @@ percentVS = data2['percentV']
 
 dt = time[1:]-time[0:-1]
 
-days = [t.days for t in dt]#[item for sublist in m for item in sublist]
+days = [t.days for t in dt]
 days2 = np.array(days)
 
 
@@ -67,8 +67,6 @@ for timestep in range(len(timeind)):
     eofPredog[timestep, :] = RS[timestep, mode]* SS[:, mode] * np.cos(phitS[timestep, mode] - thetaS[:, mode])
     mode = 1
     eofPred2og[timestep, :] = RS[timestep, mode]* SS[:, mode] * np.cos(phitS[timestep, mode] - thetaS[:, mode])
-
-
 
 
 def findSandBarAndTrough1D(xFRF, profile, plotFname=None, **kwargs):
@@ -213,9 +211,6 @@ def findSandBarAndTrough1D(xFRF, profile, plotFname=None, **kwargs):
         return None, None
 
 
-
-
-
 thetasMode1 = np.arange(0,1200,5)
 thetasMode2 = np.arange(0,1200,5)
 
@@ -228,9 +223,6 @@ for tt in range(len(thetasMode1)):
 
 
 thetag, xintg = np.meshgrid(thetasMode1, xinterpS)
-
-
-
 
 thetasMode1 = np.arange(0,360,2)
 thetasMode2 = np.arange(-45,315,2)
@@ -252,17 +244,6 @@ innerBarDZ = np.nan*np.ones((len(thetasMode2),len(thetasMode1)))
 outerBarDZ = np.nan*np.ones((len(thetasMode2),len(thetasMode1)))
 innerOuterBarDZ = np.nan*np.ones((len(thetasMode2),len(thetasMode1)))
 
-# innerBar = np.nan * np.ones((alllines.shape[0],))
-# outerBar = np.nan * np.ones((alllines.shape[0],))
-#
-# zOuterBar = np.nan * np.ones((alllines.shape[0],))
-# zInnerBar = np.nan * np.ones((alllines.shape[0],))
-#
-# innerTrough = np.nan * np.ones((alllines.shape[0],))
-# outerTrough = np.nan * np.ones((alllines.shape[0],))
-# zOuterTrough = np.nan * np.ones((alllines.shape[0],))
-# zInnerTrough = np.nan * np.ones((alllines.shape[0],))
-#
 
 for tt in range(len(thetasMode1)):
    eofPred = SS[:, 0] * np.nanmean(RS[:, 0]) * np.cos(thetasMode1[tt] * np.pi / 180 - thetaS[:, 0])
@@ -272,8 +253,6 @@ for tt in range(len(thetasMode1)):
       fname = "/home/dylananderson/projects/duckGeomorph/sandBarTool/Mode1_{}_Mode2_{}.png".format(thetasMode1[tt],thetasMode2[yy])
       xFRFbar, xFRFtrough = findSandBarAndTrough1D(xinterpS, combined, plotFname=None, smoothLengthScale=5, profileTrend=np.mean(alllines,axis=0))
       if xFRFbar is not None:
-            #for sandbarX in xFRFbar:
-            #    ax[1].plot(sandbarX, time[tt], 'ro', label='bar')
 
          if len(xFRFbar) > 1:
             outerBarX[yy,tt] = np.max(xFRFbar)
@@ -293,18 +272,7 @@ for tt in range(len(thetasMode1)):
             outerBarDZ[yy,tt] = outerBarZ[yy,tt]-outerTroughZ[yy,tt]
             innerBarDZ[yy,tt] = innerBarZ[yy,tt]-innerTroughZ[yy,tt]
 
-            # innerOuterBarX[yy,tt] = np.max(xFRFbar)
-            # zOuterInd = np.where((np.round(2*np.max(xFRFbar))/2 == xinterpS))
-            # innerOuterBarZ[yy,tt] = combined[zOuterInd[0]]
-
          else:
-            # innerBarX[yy,tt] = xFRFbar
-            # zInnerInd = np.where((np.round(2*xFRFbar)/2 == xinterpS))
-            # innerBarZ[yy,tt] = combined[zInnerInd[0]]
-            #
-            # outerBarX[yy,tt] = xFRFbar
-            # zOuterInd = np.where((np.round(2*xFRFbar)/2 == xinterpS))
-            # outerBarZ[yy,tt] = combined[zOuterInd[0]]
 
             innerOuterBarX[yy,tt] = xFRFbar
             zOuterInd = np.where((np.round(2*np.max(xFRFbar))/2 == xinterpS))
@@ -314,149 +282,7 @@ for tt in range(len(thetasMode1)):
             innerOuterTroughZ[yy, tt] = combined[innerOuterTroughZInd[0]]
             innerOuterBarDZ[yy,tt] = innerOuterBarZ[yy,tt]-innerOuterTroughZ[yy,tt]
 
-
-      # if xFRFtrough is not None:
-        #     #for troughX in xFRFtrough:
-        #     #    ax[1].plot(troughX, time[tt], 'bd', label='trough')
-        #     if len(xFRFtrough) > 1:
-        #         outerTrough[tt] = np.max(xFRFtrough)
-        #         zOuterInd = np.where((np.round(2*np.max(xFRFtrough))/2 == bathyX))
-        #         zOuterTrough[tt] = bathy[zOuterInd[0]]
-        #
-        #         innerTrough[tt] = np.min(xFRFtrough)
-        #         zInnerInd = np.where((np.round(2*np.min(xFRFtrough))/2 == bathyX))
-        #         zInnerTrough[tt] = bathy[zInnerInd[0]]
-        #     else:
-        #         outerTrough[tt] = xFRFtrough
-        #         zOuterInd = np.where((np.round(2*xFRFtrough)/2 == bathyX))
-        #         zOuterTrough[tt] = bathy[zOuterInd[0]]
-        #barPatch = mpatches.Patch(color='red', label='sandbar')
-        #troughPatch = mpatches.Patch(color='blue', label='trough')
-
 meshTheta1, meshTheta2 = np.meshgrid(thetasMode1,thetasMode2)
-
-# fig2 = plt.figure(figsize=(12,10))
-# ax1 = plt.subplot2grid((2,2),(0,0),rowspan=1,colspan=1)
-# p1 = ax1.pcolor(meshTheta1,meshTheta2,innerBarX,vmin=30,vmax=300)
-# cb1 = plt.colorbar(p1,ax=ax1)
-# cb1.set_label('xFRF')
-# ax2 = plt.subplot2grid((2,2),(0,1),rowspan=1,colspan=1)
-# p2 = ax2.pcolor(meshTheta1,meshTheta2,outerBarX,vmin=30,vmax=300)
-# ax2.set_xlabel('Mode 1 Phase')
-# ax1.set_xlabel('Mode 1 Phase')
-# ax1.set_ylabel('Mode 2 Phase')
-# ax1.set_title('Inner Bar Cross-shore Location')
-# ax2.set_title('Outer Bar Cross-shore Location')
-# cb2 = plt.colorbar(p2,ax=ax2)
-# cb2.set_label('xFRF')
-#
-#
-# ax3 = plt.subplot2grid((2,2),(1,0),rowspan=1,colspan=1)
-# p3 = ax3.pcolor(meshTheta1,meshTheta2,innerBarDZ)#,vmin=-6,vmax=-1.5)
-# cb3 = plt.colorbar(p3,ax=ax3)
-# cb3.set_label('Depth (m)')
-#
-# ax4 = plt.subplot2grid((2,2),(1,1),rowspan=1,colspan=1)
-# p4 = ax4.pcolor(meshTheta1,meshTheta2,outerBarDZ)#,vmin=-6,vmax=-1.5)
-# cb4 = plt.colorbar(p4,ax=ax4)
-# cb4.set_label('Depth (m)')
-#
-# ax4.set_xlabel('Mode 1 Phase')
-# ax3.set_xlabel('Mode 1 Phase')
-# ax3.set_ylabel('Mode 2 Phase')
-# ax3.set_title('Inner Bar Depth')
-# ax4.set_title('Outer Bar Depth')
-# plt.tight_layout()
-#
-# plt.show()
-
-# index1 = np.where((timeS > DT.datetime(1984,9,1)) & (timeS < DT.datetime(1988,9,1)))
-# indexedTime = timeS[index1]
-# indexedOrdinal = [i.toordinal() for i in indexedTime]
-# plt.figure()
-# mode1prop = np.unwrap(phitS[index1[0],0])
-# mode2prop = np.unwrap(phitS[index1[0],1])
-# plt.plot(mode1prop,mode2prop)
-
-
-
-
-fig2 = plt.figure(figsize=(14,8))
-ax1 = plt.subplot2grid((2,3),(0,0),rowspan=1,colspan=1)
-p1 = ax1.pcolor(meshTheta1,meshTheta2,innerBarX,vmin=30,vmax=300)
-cb1 = plt.colorbar(p1,ax=ax1)
-cb1.set_label('xFRF')
-ax2 = plt.subplot2grid((2,3),(0,1),rowspan=1,colspan=1)
-p2 = ax2.pcolor(meshTheta1,meshTheta2,outerBarX,vmin=30,vmax=300)
-ax2.set_xlabel('Mode 1 Phase')
-ax1.set_xlabel('Mode 1 Phase')
-# ax3.set_xlabel('Mode 1 Phase')
-ax1.set_ylabel('Mode 2 Phase')
-ax1.set_title('Inner Bar Cross-shore Location')
-ax2.set_title('Outer Bar Cross-shore Location')
-
-cb2 = plt.colorbar(p2,ax=ax2)
-cb2.set_label('xFRF')
-ax1c = plt.subplot2grid((2,3),(0,2),rowspan=1,colspan=1)
-p1c = ax1c.pcolor(meshTheta1,meshTheta2,innerOuterBarX,vmin=30,vmax=300)
-cb1c = plt.colorbar(p1c,ax=ax1c)
-cb1c.set_label('xFRF')
-ax1c.set_title('Single Bar Cross-shore Location')
-
-ax3 = plt.subplot2grid((2,3),(1,0),rowspan=1,colspan=1)
-p3 = ax3.pcolor(meshTheta1,meshTheta2,innerBarDZ,vmin=0,vmax=1)
-cb3 = plt.colorbar(p3,ax=ax3)
-cb3.set_label('Depth (m)')
-
-ax4 = plt.subplot2grid((2,3),(1,1),rowspan=1,colspan=1)
-p4 = ax4.pcolor(meshTheta1,meshTheta2,outerBarDZ,vmin=0,vmax=1)
-cb4 = plt.colorbar(p4,ax=ax4)
-cb4.set_label('Depth (m)')
-
-ax4c = plt.subplot2grid((2,3),(1,2),rowspan=1,colspan=1)
-p4c = ax4c.pcolor(meshTheta1,meshTheta2,innerOuterBarDZ,vmin=0,vmax=1)
-cb4c = plt.colorbar(p4c,ax=ax4c)
-cb4c.set_label('Depth (m)')
-
-ax4c.set_xlabel('Mode 1 Phase')
-ax4.set_xlabel('Mode 1 Phase')
-ax3.set_xlabel('Mode 1 Phase')
-ax3.set_ylabel('Mode 2 Phase')
-ax3.set_title('Inner Bar Magnitude')
-ax4.set_title('Outer Bar Magnitude')
-ax4c.set_title('Single Bar Magnitude')
-
-plt.tight_layout()
-
-
-
-
-
-plt.figure(figsize=(14,10))
-ax101 = plt.subplot2grid((1,2),(0,0),rowspan=1,colspan=1)
-p101 = ax101.pcolor(meshTheta1,meshTheta2,innerBarZ-outerBarZ)#vmin=0,vmax=1)
-cb101 = plt.colorbar(p101,ax=ax101)
-ax101.set_xlabel(r'Mode 2 Phase (offshore $\longrightarrow$)')
-ax101.set_ylabel(r'Mode 2 Phase (onshore $\longrightarrow$)')
-cb101.set_label('Difference in Bar Crest Depth')
-ax101.set_title('Onshore Propagation Separates the Crest''s Depths')
-# ax101.set_xlim([-180,180])
-# ax101.set_ylim([-100,260])
-
-ax102 = plt.subplot2grid((1,2),(0,1),rowspan=1,colspan=1)
-p102 = ax102.pcolor(meshTheta1,meshTheta2,outerBarX-innerBarX)#vmin=0,vmax=1)
-cb102 = plt.colorbar(p102,ax=ax102)
-ax102.set_xlabel(r'Mode 2 Phase (offshore $\longrightarrow$)')
-ax102.set_ylabel(r'Mode 2 Phase (onshore $\longrightarrow$)')
-cb102.set_label('Difference in Bar Crest Cross-shore Location')
-ax102.set_title('Offshore Propagation Converges the Crest''s Horizontal Distance')
-# ax102.set_xlim([-180,180])
-# ax102.set_ylim([-100,260])
-
-plt.show()
-
-
-
 
 import copy
 doublebar = copy.deepcopy(outerBarX)
@@ -467,74 +293,35 @@ singlebar = copy.deepcopy(innerOuterBarX)
 singleIndex = np.where((singlebar > 0))
 doublebar[singleIndex] = 0.25
 
-
-
-
-
-
-
-
-
-# plt.style.use('dark_background')
 fig = plt.figure(figsize=(10,11))
 ax1 = plt.subplot2grid((5,3),(3,0),rowspan=1,colspan=1)
 p1 = ax1.pcolor(meshTheta1,meshTheta2,innerBarX,vmin=30,vmax=300,cmap='plasma')
 ax1.text(0.04, .85, 'e.', transform=ax1.transAxes, size=14, weight='bold')
 
-# ax1.set_xlim([-180,180])
-# ax1.set_ylim([-100,260])
-# cb1 = plt.colorbar(p1,ax=ax1)
-# cb1.set_label('xFRF')
-# ax1.text(50,200,'Location')
 ax2 = plt.subplot2grid((5,3),(3,1),rowspan=1,colspan=1)
 p2 = ax2.pcolor(meshTheta1,meshTheta2,outerBarX,vmin=30,vmax=300,cmap='plasma')
 ax2.text(0.04, .85, 'f.', transform=ax2.transAxes, size=14, weight='bold')
 
-# ax2.set_xlim([-180,180])
-# ax2.set_ylim([-100,260])
-# ax2.text(50,200,'Location')
-# ax2.set_xlabel('Mode 1 Phase')
-# ax1.set_xlabel('Mode 1 Phase')
-# ax3.set_xlabel('Mode 1 Phase')
-# ax1.set_ylabel('Mode 2 Phase')
 ax1.set_ylabel(r'Onshore (deg) $\Longrightarrow$')
 ax1.set_title('Inner Bar',fontsize=12)
 ax2.set_title('Outer Bar',fontsize=12)
-# cb2 = plt.colorbar(p2,ax=ax2)
-# cb2.set_label('xFRF')
 ax1c = plt.subplot2grid((5,3),(3,2),rowspan=1,colspan=1)
 p1c = ax1c.pcolor(meshTheta1,meshTheta2,innerOuterBarX,vmin=30,vmax=300,cmap='plasma')
 ax1c.text(0.04, .85, 'g.', transform=ax1c.transAxes, size=14, weight='bold',color='white')
 
-# ax1c.set_xlim([-180,180])
-# ax1c.set_ylim([-100,260])
-# cb1c = plt.colorbar(p1c,ax=ax1c)
-# cb1c.set_label('xFRF')
 ax1c.set_title('Single Bar',fontsize=12)
 ax3 = plt.subplot2grid((5,3),(4,0),rowspan=1,colspan=1)
 p3 = ax3.pcolor(meshTheta1,meshTheta2,innerBarDZ,vmin=0,vmax=1)
 ax3.text(0.04, .85, 'h.', transform=ax3.transAxes, size=14, weight='bold')
 
-# ax3.set_xlim([-180,180])
-# ax3.set_ylim([-100,260])
-# cb3 = plt.colorbar(p3,ax=ax3)
-# cb3.set_label('Depth (m)')
-# ax3.text(50,200,'Magnitude')
 ax4 = plt.subplot2grid((5,3),(4,1),rowspan=1,colspan=1)
 p4 = ax4.pcolor(meshTheta1,meshTheta2,outerBarDZ,vmin=0,vmax=1)
 ax4.text(0.04, .85, 'i.', transform=ax4.transAxes, size=14, weight='bold')
 
-# ax4.set_xlim([-180,180])
-# ax4.set_ylim([-100,260])
-# cb4 = plt.colorbar(p4,ax=ax4)
-# cb4.set_label('Depth (m)')
-# ax4.text(50,200,'Magnitude')
 ax4c = plt.subplot2grid((5,3),(4,2),rowspan=1,colspan=1)
 p4c = ax4c.pcolor(meshTheta1,meshTheta2,innerOuterBarDZ,vmin=0,vmax=1)
 ax4c.text(0.04, .85, 'j.', transform=ax4c.transAxes, size=14, weight='bold',color='white')
 
-# ax4c.set_xlim([-180,180])
-# ax4c.set_ylim([-100,260])
 ax4c.set_xlabel(r'Offshore (deg) $\Longrightarrow$')
 ax4.set_xlabel(r'Offshore (deg) $\Longrightarrow$')
 ax3.set_xlabel(r'Offshore (deg) $\Longrightarrow$')
@@ -576,10 +363,7 @@ shade3_ax.set_yticks([])
 shade3_ax.text(0.2,0.2,'Double Bar',weight='bold')
 
 
-
-
 conceptbar_ax = fig.add_axes([0.48, 0.52, 0.48, 0.45])
-#conceptbar_ax = plt.subplot2grid((5,3),(0,1),rowspan=3,colspan=2)
 con = conceptbar_ax.pcolor(meshTheta1,meshTheta2,doublebar,vmin=0,vmax=1,cmap='Greys')
 conceptbar_ax.set_xlabel(r'Offshore (deg) $\Longrightarrow$')
 conceptbar_ax.set_ylabel(r'Onshore (deg) $\Longrightarrow$')
@@ -614,13 +398,8 @@ conceptbar_ax.text(262,260,'Single Bar from')#,weight='bold')
 conceptbar_ax.text(262,245, 'Inner Terrace')#,weight='bold')
 conceptbar_ax.text(-0.05, 1.02, 'd.', transform=conceptbar_ax.transAxes, size=14, weight='bold')
 
-
-#ax31 = plt.subplot2grid((7,4),(0,3),rowspan=3,colspan=1)
 ax31 = fig.add_axes([0.13,0.82,0.27,0.145])
-# ax31.plot(xintg[:,0],eofHypo2.T[:,0]+eofHypo.T[:,4]+np.mean(alllinesS,axis=0),color='orange')
 ax31.set_ylabel('Depth (m)')
-# ax31.set_title('Example Profile Reconstruction',fontsize=12)
-# ax31.text(-0.18, 1.03, 'e.', transform=ax31.transAxes, size=14, weight='bold')
 ax31.set_xticklabels('')
 thetaMode2 =60
 eofPred2 = SS[:,1]*np.nanmean(RS[:,1]) * np.cos(thetaMode2*np.pi/180 - thetaS[:,1])
@@ -647,9 +426,7 @@ ax31.spines["right"].set_color('blue')
 ax31.legend()
 ax31.text(-0.18, 1.02, 'a.', transform=ax31.transAxes, size=14, weight='bold')
 
-
 ax32 = fig.add_axes([0.13,0.66,0.27,0.145])
-# ax32.plot(xintg[:,0],eofHypo2.T[:,0]+eofHypo.T[:,4]+np.mean(alllinesS,axis=0),color='orange')
 ax32.set_ylabel('Depth (m)')
 ax32.set_xticklabels('')
 
@@ -670,13 +447,9 @@ ax32.spines["bottom"].set_color('orange')
 ax32.spines["top"].set_color('orange')
 ax32.spines["left"].set_color('orange')
 ax32.spines["right"].set_color('orange')
-#ax1c.legend()
-# ax1c.set_title(r'2a. Stationary $\phi_2$ = {} + Propagating Offshore Signal'.format(thetaMode2))
 ax32.text(-0.18, 1.02, 'b.', transform=ax32.transAxes, size=14, weight='bold')
 
-
 ax33 = fig.add_axes([0.13,0.5,0.27,0.145])
-# ax33.plot(xintg[:,0],eofHypo2.T[:,0]+eofHypo.T[:,4]+np.mean(alllinesS,axis=0),color='orange')
 ax33.set_ylabel('Depth (m)')
 ax33.set_xlabel('Cross-shore (m)')
 thetaMode2 =70
@@ -700,6 +473,3 @@ ax33.spines["right"].set_color('green')
 ax33.text(-0.18, 1.02, 'c.', transform=ax33.transAxes, size=14, weight='bold')
 
 plt.show()
-# conceptbar_ax.set_xlim([-180,180])
-# conceptbar_ax.set_ylim([-100,260])
-# plt.tight_layout()
