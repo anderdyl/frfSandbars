@@ -353,8 +353,13 @@ mode2Wrap3WA = (mode2Phase3WA + np.pi) % (2 * np.pi) - np.pi
 mode1Mag = moving_average(RS[:,0],n=3)
 mode2Mag = moving_average(RS[:,1],n=3)
 
-fig = plt.figure(figsize=(14,8))
-ax100 = plt.subplot2grid((2,3),(0,0),rowspan=1,colspan=1)
+
+
+
+
+fig = plt.figure(figsize=(10,10))
+
+ax100 = plt.subplot2grid((1,1),(0,0),rowspan=1,colspan=1)
 con1 = ax100.pcolor(meshTheta1,meshTheta2,doublebar,vmin=0,vmax=1,cmap='Greys')
 coloredlines = cm.rainbow(np.linspace(0,1,len(lowWaves)))
 lineSlopes = []
@@ -455,14 +460,8 @@ for ff in range(len(lowWaves)):
         newy = f(newx)
         if indexedTime[0].year < 2005 or indexedTime[0].year > 2008:# and indexedTime[0].year < 2021:
             if np.mean(mags1) < 0.23:
-                #lines1 = ax100.plot(newx,newy,'-',linewidth=2,color='k',label='{}'.format(indexedTime[0].year))
                 print(np.mean(mags1))
                 print(np.mean(mags2))
-
-            # elif np.mean(mags2) < 0.23:
-            #     lines1 = ax100.plot(newx,newy,'-',linewidth=2,color='k',label='{}'.format(indexedTime[0].year))
-            #     print(np.mean(mags1))
-            #     print(np.mean(mags2))
             else:
                 lines1 = ax100.plot(newx, newy, '-', linewidth=2, color=colorOfLine, label='{}'.format(indexedTime[0].year))
                 add_arrow(lines1[0], color='k', size=25)
@@ -470,42 +469,13 @@ for ff in range(len(lowWaves)):
                 lineSlopeTimes.append(indexedTime[0])
                 print(indexedTime[0])
 
-    #
-    # if indexedTime[0].year < 2005 or indexedTime[0].year > 2008:
-    #     if indexedTime[0].year < 2021:
-    #         if np.nanmean(mags) > 0.4:
-    #
-    #             if x1[-1] < 60 and y1[0]>-100:
-    #
-    #                 lines1 = ax100.plot(newx,newy,'-',linewidth=2,color=colorOfLine,label='{}'.format(indexedTime[0].year))
-    #                 lineSlopeTimes.append(indexedTime[0])
-    #                 lineSlopes.append(slope)
-    #                 add_arrow(lines1[0], color='k', size=25)
-    #             elif x1[-1] > 60:
-    #                 if x1[-1] > 200 and y1[-1]>200:
-    #                     lines1 = ax100.plot(newx-360,newy,'-',linewidth=2,color=colorOfLine,label='{}'.format(indexedTime[0].year))
-    #                     add_arrow(lines1[0], color='k', size=25)
-    #                     lineSlopeTimes.append(indexedTime[0])
-    #                     lineSlopes.append(slope)
-    #                 else:
-    #                     if indexedTime[0].year < 2014 and indexedTime[0].year > 1981:
-    #                         if x1[0] < 73 and y1[0] < -65:
-    #                             print('skipping')
-    #                         else:
-    #                             lines1 = ax100.plot(newx,newy,'-',linewidth=2,color=colorOfLine,label='{}'.format(indexedTime[0].year))
-    #                             lineSlopeTimes.append(indexedTime[0])
-    #                             lineSlopes.append(slope)
-    #                         add_arrow(lines1[0], color='k', size=25)
-
 ax100.set_xlim([0, 440])
 ax100.set_ylim([-50, 380])
-ax100.set_xlabel(r'Offshore Propagation $\Longrightarrow$',fontsize=10)
-ax100.set_ylabel(r'Onshore Propagation $\Longrightarrow$',fontsize=10)
-# ax100.set_title('Non-dimensional Fall Velocity < 6')
-ax100.set_title('Migrations during mild waves')
-ax100.text(-0.05, 1.03, 'a.', transform=ax100.transAxes, size=14, weight='bold')
-
+ax100.set_xlabel(r'Offshore Propagation $\Longrightarrow$',fontsize=12)
+ax100.set_ylabel(r'Onshore Propagation $\Longrightarrow$',fontsize=12)
+ax100.set_title('Non-dimensional Fall Velocity < 6')
 # plt.legend()
+plt.show()
 #
 
 
@@ -523,36 +493,51 @@ for hh in range(len(lineSlopeTimes)):
 
     if tempDay > 28:
         tempDay = 28
-    if tempMonth > 4:
+    if tempMonth > 4 and tempMonth < 12:
         allWaves4 = np.where((tC < DT.datetime(tempYear,tempMonth-3,tempDay)) & (tC > DT.datetime(tempYear,tempMonth-4,tempDay)))
         allWaves1 = np.where((tC < DT.datetime(tempYear,tempMonth-2,tempDay)) & (tC > DT.datetime(tempYear,tempMonth-3,tempDay)))
         allWaves2 = np.where((tC < DT.datetime(tempYear,tempMonth-1,tempDay)) & (tC > DT.datetime(tempYear,tempMonth-2,tempDay)))
         allWaves3 = np.where((tC < timeSubset[tempInd[0][0]]) & (tC > DT.datetime(tempYear,tempMonth-1,tempDay)))
+        allWaves5 = np.where((tC > timeSubset[tempInd[0][0]]) & (tC < DT.datetime(tempYear,tempMonth+1,tempDay)))
+    elif tempMonth == 12:
+        allWaves4 = np.where((tC < DT.datetime(tempYear,tempMonth-3,tempDay)) & (tC > DT.datetime(tempYear,tempMonth-4,tempDay)))
+        allWaves1 = np.where((tC < DT.datetime(tempYear,tempMonth-2,tempDay)) & (tC > DT.datetime(tempYear,tempMonth-3,tempDay)))
+        allWaves2 = np.where((tC < DT.datetime(tempYear,tempMonth-1,tempDay)) & (tC > DT.datetime(tempYear,tempMonth-2,tempDay)))
+        allWaves3 = np.where((tC < timeSubset[tempInd[0][0]]) & (tC > DT.datetime(tempYear,tempMonth-1,tempDay)))
+        allWaves5 = np.where((tC > timeSubset[tempInd[0][0]]) & (tC < DT.datetime(tempYear+1,1,tempDay)))
     elif tempMonth == 4:
         allWaves4 = np.where((tC < DT.datetime(tempYear,tempMonth-3,tempDay)) & (tC > DT.datetime(tempYear-1,12,tempDay)))
         allWaves1 = np.where((tC < DT.datetime(tempYear,tempMonth-2,tempDay)) & (tC > DT.datetime(tempYear,tempMonth-3,tempDay)))
         allWaves2 = np.where((tC < DT.datetime(tempYear,tempMonth-1,tempDay)) & (tC > DT.datetime(tempYear,tempMonth-2,tempDay)))
         allWaves3 = np.where((tC < timeSubset[tempInd[0][0]]) & (tC > DT.datetime(tempYear,tempMonth-1,tempDay)))
+        allWaves5 = np.where((tC > timeSubset[tempInd[0][0]]) & (tC < DT.datetime(tempYear,tempMonth+1,tempDay)))
+
     elif tempMonth == 3:
         allWaves4 = np.where((tC < DT.datetime(tempYear-1,12,tempDay)) & (tC > DT.datetime(tempYear-1,11,tempDay)))
         allWaves1 = np.where((tC < DT.datetime(tempYear-1,11,tempDay)) & (tC > DT.datetime(tempYear-1,10,tempDay)))
         allWaves2 = np.where((tC < DT.datetime(tempYear,tempMonth-1,tempDay)) & (tC > DT.datetime(tempYear,tempMonth-2,tempDay)))
         allWaves3 = np.where((tC < timeSubset[tempInd[0][0]]) & (tC > DT.datetime(tempYear,tempMonth-1,tempDay)))
+        allWaves5 = np.where((tC > timeSubset[tempInd[0][0]]) & (tC < DT.datetime(tempYear,tempMonth+1,tempDay)))
+
     elif tempMonth == 2:
         allWaves2 = np.where((tC < DT.datetime(tempYear-1,10,tempDay)) & (tC > DT.datetime(tempYear-1,9,tempDay)))
         allWaves4 = np.where((tC < DT.datetime(tempYear-1,12,tempDay)) & (tC > DT.datetime(tempYear-1,11,tempDay)))
         allWaves1 = np.where((tC < DT.datetime(tempYear-1,11,tempDay)) & (tC > DT.datetime(tempYear-1,10,tempDay)))
         allWaves3 = np.where((tC < timeSubset[tempInd[0][0]]) & (tC > DT.datetime(tempYear,tempMonth-1,tempDay)))
+        allWaves5 = np.where((tC > timeSubset[tempInd[0][0]]) & (tC < DT.datetime(tempYear,tempMonth+1,tempDay)))
+
     elif tempMonth == 1:
         allWaves2 = np.where((tC < DT.datetime(tempYear-1,10,tempDay)) & (tC > DT.datetime(tempYear-1,9,tempDay)))
         allWaves4 = np.where((tC < DT.datetime(tempYear-1,12,tempDay)) & (tC > DT.datetime(tempYear-1,11,tempDay)))
         allWaves1 = np.where((tC < DT.datetime(tempYear-1,11,tempDay)) & (tC > DT.datetime(tempYear-1,10,tempDay)))
         allWaves3 = np.where((tC < timeSubset[tempInd[0][0]]) & (tC > DT.datetime(tempYear-1,12,tempDay)))
+        allWaves5 = np.where((tC > timeSubset[tempInd[0][0]]) & (tC < DT.datetime(tempYear,tempMonth+1,tempDay)))
+
 
     # if tempMonth > 2 and tempMonth < 10:
     #     print(lineSlopeTimes[hh])
     #     print('{}/{}/{}'.format(tempYear, tempMonth, tempDay))
-    threeMonthWE.append([np.nanmean(weC[allWaves4]),np.nanmean(weC[allWaves1]),np.nanmean(weC[allWaves2]),np.nanmean(weC[allWaves3])])
+    threeMonthWE.append([np.nanmean(weC[allWaves4]),np.nanmean(weC[allWaves1]),np.nanmean(weC[allWaves2]),np.nanmean(weC[allWaves3]),np.nanmean(weC[allWaves5])])
     threeMonthLWP.append([np.nanmean(np.abs(lwpC[allWaves4])),np.nanmean(np.abs(lwpC[allWaves1])),np.nanmean(np.abs(lwpC[allWaves2])),np.nanmean(np.abs(lwpC[allWaves3]))])
     threeMonthFV.append([np.nanmean(fV[allWaves4]),np.nanmean(fV[allWaves1]),np.nanmean(fV[allWaves2]),np.nanmean(fV[allWaves3])])
     lineSubset.append(lineSlopes[hh])
@@ -563,8 +548,9 @@ lowSlopes = np.where((np.array(lineSubset) < 1.2))
 highSlopes = np.where((np.array(lineSubset) > 1.2))
 
 
-plotTime = [1,2,3,4]
-ax1 = plt.subplot2grid((2,3),(1,0),rowspan=1,colspan=1)
+plotTime = [1,2,3,4,5]
+plt.figure()
+ax1 = plt.subplot2grid((1,1),(0,0),rowspan=1,colspan=1)
 seasonalMean = np.mean(np.array(threeMonthWE)[highSlopes[0],:],axis=0)
 seasonalStd = np.std(np.array(threeMonthWE)[highSlopes[0],:],axis=0)
 ax1.plot(plotTime,seasonalMean,'o-',label='2 Bars Maintained',color='r')
@@ -575,23 +561,12 @@ seasonalStd2 = np.std(np.array(threeMonthWE)[lowSlopes[0],:],axis=0)
 ax1.plot(plotTime,seasonalMean2,'o-',label='New Bar Created',color='blue')
 ax1.fill_between(plotTime, seasonalMean2 - seasonalStd2, seasonalMean2 + seasonalStd2, color='blue', alpha=0.2)
 
-ax1.set_xticks([plotTime[0],plotTime[1],plotTime[2],plotTime[3]])
-ax1.set_xticklabels(['4-months prior','3-months prior','2-months prior','1-month prior',])
+ax1.set_xticks([plotTime[0],plotTime[1],plotTime[2],plotTime[3],plotTime[4]])
+ax1.set_xticklabels(['4-mon. prior','3-mon. prior','2-mon. prior','1-mon. prior','Start of Arrow'])
 ax1.legend()
-ax1.set_title('Wave energy preceeding arrows in (a)')
-ax1.text(-0.05, 1.03, 'b.', transform=ax1.transAxes, size=14, weight='bold')
-ax1.set_ylabel('Wave Energy ')
+plt.show()
 
-import matplotlib.image as mpimg
-ax2 = plt.subplot2grid((2,3),(0,1),rowspan=2,colspan=2)
-ax2.imshow(mpimg.imread('conceptualFlowchart.png'))
-ax2.axes.get_xaxis().set_visible(False)
-ax2.axes.get_yaxis().set_visible(False)
-ax2.text(-0.05, 1.02, 'c.', transform=ax2.transAxes, size=14, weight='bold')
-ax2.set_title('Conceptual Flow Map for Interannual Sandbar Evolutions',fontsize=18)
-ax2.spines["bottom"].set_linewidth(0)
-ax2.spines["top"].set_linewidth(0)
-ax2.spines["left"].set_linewidth(0)
-ax2.spines["right"].set_linewidth(0)
 
-plt.tight_layout()
+
+
+

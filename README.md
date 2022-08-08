@@ -3,11 +3,26 @@
 Place-holder for zenodo doi: 
 [![DOI](https://zenodo.org/badge/381731651.svg)](https://zenodo.org/badge/latestdoi/381731651)
 
+
+### Files
+- [A1loadExtractData.py](./A1loadExtractData.py) Loading, averaging, interpolating transects from a directory of netcdf files containing FRF survey transects.
+- [B1complexEOFs.py](./B1complexEOFs.py) Applying CEOFs to the geomorphology data set.
+- [C1phaseSpace.py](./C1phaseSpace.py) Identifying profile characteristics for all interferences of the dominant two modes of sandbar migration.
+- [D1realWorlMigrations.py](./D1realWorldMigrations.py) Plotting observed sandbar migrations into phase space depending on preceeding month's wave conditions.
+- [F1studyMap.py](./F1studyMap.py) Creating the top figure in this README.
+- [F2ceofOnOff.py](./F2ceofOnOff.py) Creating above figure with two different dominant mode of sandbar migration.
+- [F3phaseDiagram.py](./F3phaseDiagram.py) Creating annotated phase space diagram provided above.
+- [F4waveForcing.py](./F4waveForcing.py) Creating combined figure with historical migrations, associated waves, and conceptual flowchart.
+- [downloadThredds.py](./downloadThredds.py) Local download of CHL Thredds data, with script set for WIS waves.
+- [sandbarUtils.py](./sandbarUtils.py) Functions for picking sandbar crests/troughs.
+
+
 ### Overview
 
 Codes in this repo process topo-bathy surveys from the Field Research Facility to assess sandbar dynamics observed since 1980.
 The intent is to develop a cross-shore perspective on morphology evolution that considers the complete profile evolution (as opposed to 1-dimensional variables such as sandbar cross-shore loction or sandbar depth).
 Complex Empirical Orthogonal Functions (CEOFs) are used to isolate offshore propagrations (dominant mode) and onshore migrations (2nd mode).
+It is demonstrated that sanbars experiencing mild wave conditions can migrate either onshore or offshore depending on the inherited cross-shore profile.
 
 
 
@@ -43,15 +58,6 @@ Constructive interference of the two modes results in a profile reconstruction, 
 
 ![image](https://github.com/anderdyl/frfSandbars/blob/master/figure3.png)
 
-
-
-![image](https://github.com/anderdyl/frfSandbars/blob/master/conceptualFlowchart.png)
-
-### Files
-- [A1loadExtractData.py](./A1loadExtractData.py) Loading, averaging, interpolating transects from a directory of netcdf files containing FRF survey transects.
-- [B1complexEOFs.py](./B1complexEOFs.py) Applying CEOFs to the geomorphology data set.
-- [C1phaseSpace.py](./C1phaseSpace.py) Identifying profile characteristics for all interferences of the dominant two modes of sandbar migration.
-- [F1studyMap.py](./F1studyMap.py) Creating the top figure in this README.
-- [F2ceofOnOff.py](./F2ceofOnOff.py) Creating above figure with two different dominant mode of sandbar migration.
-- [F3phaseDiagram.py](./F3phaseDiagram.py) Creating annotated phase space diagram provided above.
-- [downloadThredds.py](./downloadThredds.py) Local download of CHL Thredds data, with script set for WIS waves.
+The script [D1realWorldMigrations.py](./D1realWorldMigrations.py) plots historical observations into the conceptual phase space, specifically highlighting that similar migration directions are clustered in phase-space during mild conditions, and thus the direction of migration is dependent on the inherited morphology.
+The same script assesses the average wave energy experienced in the months preceeding each migration to demonstrate that offshore migrations during mild conditions preferentially occur when following larger wave energy months.
+![image](https://github.com/anderdyl/frfSandbars/blob/master/figure4.png)
