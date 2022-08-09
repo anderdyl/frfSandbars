@@ -3,7 +3,6 @@
 Place-holder for zenodo doi: 
 [![DOI](https://zenodo.org/badge/381731651.svg)](https://zenodo.org/badge/latestdoi/381731651)
 
-
 ### Files
 - [A1loadExtractData.py](./A1loadExtractData.py) Loading, averaging, interpolating transects from a directory of netcdf files containing FRF survey transects.
 - [B1complexEOFs.py](./B1complexEOFs.py) Applying CEOFs to the geomorphology data set.
@@ -16,16 +15,12 @@ Place-holder for zenodo doi:
 - [downloadThredds.py](./downloadThredds.py) Local download of CHL Thredds data, with script set for WIS waves.
 - [sandbarUtils.py](./sandbarUtils.py) Functions for picking sandbar crests/troughs.
 
-
 ### Overview
 
 Codes in this repo process topo-bathy surveys from the Field Research Facility to assess sandbar dynamics observed since 1980.
 The intent is to develop a cross-shore perspective on morphology evolution that considers the complete profile evolution (as opposed to 1-dimensional variables such as sandbar cross-shore loction or sandbar depth).
 Complex Empirical Orthogonal Functions (CEOFs) are used to isolate offshore propagrations (dominant mode) and onshore migrations (2nd mode).
 It is demonstrated that sanbars experiencing mild wave conditions can migrate either onshore or offshore depending on the inherited cross-shore profile.
-
-
-
 
 ![image](https://github.com/anderdyl/frfSandbars/blob/master/figure1.png)
 
@@ -43,11 +38,9 @@ Wave data is also freely available at the Coastal & Hydraulics Laboratory [THRED
 The script [downloadThredds.py](./downloadThredds.py) was used to locally download monthly hindcast files from Wave Information Studies node 63218. See [getDataFRF.py](https://github.com/erdc/getdatatestbed) for functions to automatically download FRF buoy observations from the server rather than the hindcast. 
 The above figure showing all data used in this study can be generated with [F1studyMap.py](./F1studyMap.py) using either the provided 'sandbarsSouthernTransect' file or by running [AlloadExtractData.py](./A1loadExtractData.py) to generate a new binary file from a directory of FRF data files (for example, with newer surveys since July 2022).
 
-
 ### Complex EOFs
 
 Complex EOFs are applied to the dataset of cross-shore profiles using [B1complexEOFs.py](./B1complexEOFs.py) to produce the following two dominant modes:
-
 
 ![image](https://github.com/anderdyl/frfSandbars/blob/master/figure2.png)
 
