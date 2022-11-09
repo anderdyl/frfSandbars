@@ -363,7 +363,9 @@ for ff in range(len(lowWaves)):
     si = lowWaves[ff][0]
     ei = lowWaves[ff][1]
     indexedTime = time3[si-2:ei]
-
+    print(si)
+    print(ei)
+    print(indexedTime)
     indexedOrdinalTime = [i.toordinal() for i in indexedTime]
     indexedTimeMonth = [i.month for i in indexedTime]
     mode1prop = mode1Phase3WA[si-2:ei]
