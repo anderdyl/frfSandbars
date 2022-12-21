@@ -110,9 +110,9 @@ outerBarX_7525 = np.nan*np.ones((len(thetasMode2),len(thetasMode1)))
 innerOuterBarX_7525 = np.nan*np.ones((len(thetasMode2),len(thetasMode1)))
 
 for tt in range(len(thetasMode1)):
-   eofPred = SS[:, 0] * np.nanpercentile(RS[:,0],75) * np.cos(thetasMode1[tt] * np.pi / 180 - thetaS[:, 0])
+   eofPred = SS[:, 0] * np.nanpercentile(RS[:,0],65) * np.cos(thetasMode1[tt] * np.pi / 180 - thetaS[:, 0])
    for yy in range(len(thetasMode2)):
-      eofPred2 = SS[:, 1] * np.nanpercentile(RS[:,1],25) * np.cos(thetasMode2[yy] * np.pi / 180 - thetaS[:, 1])
+      eofPred2 = SS[:, 1] * np.nanpercentile(RS[:,1],35) * np.cos(thetasMode2[yy] * np.pi / 180 - thetaS[:, 1])
       combined = np.real(np.mean(alllinesS,axis=0)+eofPred+eofPred2)
       xFRFbar, xFRFtrough = sandbarUtils.findSandBarAndTrough1D(xinterpS, combined, plotFname=None, smoothLengthScale=5, profileTrend=np.mean(alllinesS,axis=0))
       if xFRFbar is not None:
@@ -127,9 +127,9 @@ outerBarX_2575 = np.nan*np.ones((len(thetasMode2),len(thetasMode1)))
 innerOuterBarX_2575 = np.nan*np.ones((len(thetasMode2),len(thetasMode1)))
 
 for tt in range(len(thetasMode1)):
-   eofPred = SS[:, 0] * np.nanpercentile(RS[:,0],25) * np.cos(thetasMode1[tt] * np.pi / 180 - thetaS[:, 0])
+   eofPred = SS[:, 0] * np.nanpercentile(RS[:,0],35) * np.cos(thetasMode1[tt] * np.pi / 180 - thetaS[:, 0])
    for yy in range(len(thetasMode2)):
-      eofPred2 = SS[:, 1] * np.nanpercentile(RS[:,1],75) * np.cos(thetasMode2[yy] * np.pi / 180 - thetaS[:, 1])
+      eofPred2 = SS[:, 1] * np.nanpercentile(RS[:,1],65) * np.cos(thetasMode2[yy] * np.pi / 180 - thetaS[:, 1])
       combined = np.real(np.mean(alllinesS,axis=0)+eofPred+eofPred2)
       xFRFbar, xFRFtrough = sandbarUtils.findSandBarAndTrough1D(xinterpS, combined, plotFname=None, smoothLengthScale=5, profileTrend=np.mean(alllinesS,axis=0))
       if xFRFbar is not None:
@@ -176,9 +176,9 @@ outerBarX_2525 = np.nan * np.ones((len(thetasMode2), len(thetasMode1)))
 innerOuterBarX_2525 = np.nan * np.ones((len(thetasMode2), len(thetasMode1)))
 
 for tt in range(len(thetasMode1)):
-    eofPred = SS[:, 0] * np.nanpercentile(RS[:, 0], 25) * np.cos(thetasMode1[tt] * np.pi / 180 - thetaS[:, 0])
+    eofPred = SS[:, 0] * np.nanpercentile(RS[:, 0], 35) * np.cos(thetasMode1[tt] * np.pi / 180 - thetaS[:, 0])
     for yy in range(len(thetasMode2)):
-        eofPred2 = SS[:, 1] * np.nanpercentile(RS[:, 1], 25) * np.cos(thetasMode2[yy] * np.pi / 180 - thetaS[:, 1])
+        eofPred2 = SS[:, 1] * np.nanpercentile(RS[:, 1], 35) * np.cos(thetasMode2[yy] * np.pi / 180 - thetaS[:, 1])
         combined = np.real(np.mean(alllinesS, axis=0) + eofPred + eofPred2)
         xFRFbar, xFRFtrough = sandbarUtils.findSandBarAndTrough1D(xinterpS, combined, plotFname=None,
                                                                   smoothLengthScale=5,
@@ -675,10 +675,10 @@ for ff in range(len(lowWaves)):
 
 ax100.set_xlim([0, 440])
 ax100.set_ylim([-50, 380])
-ax100.set_xlabel(r'Offshore Propagation $\Longrightarrow$',fontsize=10)
+# ax100.set_xlabel(r'Offshore Propagation $\Longrightarrow$',fontsize=10)
 ax100.set_ylabel(r'Onshore Propagation $\Longrightarrow$',fontsize=10)
 # ax100.set_title('Non-dimensional Fall Velocity < 6')
-ax100.set_title('Migrations during mild waves')
+ax100.set_title('EOF1=50%, EOF2=50%')
 ax100.text(-0.05, 1.03, 'a.', transform=ax100.transAxes, size=14, weight='bold')
 
 # plt.legend()
@@ -834,11 +834,11 @@ for ff in range(len(lowWaves)):
 
 ax100.set_xlim([0, 440])
 ax100.set_ylim([-50, 380])
-ax100.set_xlabel(r'Offshore Propagation $\Longrightarrow$',fontsize=10)
-ax100.set_ylabel(r'Onshore Propagation $\Longrightarrow$',fontsize=10)
+# ax100.set_xlabel(r'Offshore Propagation $\Longrightarrow$',fontsize=10)
+# ax100.set_ylabel(r'Onshore Propagation $\Longrightarrow$',fontsize=10)
 # ax100.set_title('Non-dimensional Fall Velocity < 6')
-ax100.set_title('EOF1=75%, EOF2=25%')
-ax100.text(-0.05, 1.03, 'a.', transform=ax100.transAxes, size=14, weight='bold')
+ax100.set_title('EOF1=65%, EOF2=35%')
+ax100.text(-0.05, 1.03, 'b.', transform=ax100.transAxes, size=14, weight='bold')
 
 
 
@@ -964,11 +964,11 @@ for ff in range(len(lowWaves)):
 
 ax100.set_xlim([0, 440])
 ax100.set_ylim([-50, 380])
-ax100.set_xlabel(r'Offshore Propagation $\Longrightarrow$',fontsize=10)
-ax100.set_ylabel(r'Onshore Propagation $\Longrightarrow$',fontsize=10)
+# ax100.set_xlabel(r'Offshore Propagation $\Longrightarrow$',fontsize=10)
+# ax100.set_ylabel(r'Onshore Propagation $\Longrightarrow$',fontsize=10)
 # ax100.set_title('Non-dimensional Fall Velocity < 6')
-ax100.set_title('EOF1=25%, EOF2=75%')
-ax100.text(-0.05, 1.03, 'a.', transform=ax100.transAxes, size=14, weight='bold')
+ax100.set_title('EOF1=35%, EOF2=65%')
+ax100.text(-0.05, 1.03, 'c.', transform=ax100.transAxes, size=14, weight='bold')
 
 
 
@@ -1097,10 +1097,10 @@ for ff in range(len(lowWaves)):
 ax100.set_xlim([0, 440])
 ax100.set_ylim([-50, 380])
 ax100.set_xlabel(r'Offshore Propagation $\Longrightarrow$',fontsize=10)
-ax100.set_ylabel(r'Onshore Propagation $\Longrightarrow$',fontsize=10)
+# ax100.set_ylabel(r'Onshore Propagation $\Longrightarrow$',fontsize=10)
 # ax100.set_title('Non-dimensional Fall Velocity < 6')
-ax100.set_title('EOF1=85%, EOF2=50%')
-ax100.text(-0.05, 1.03, 'a.', transform=ax100.transAxes, size=14, weight='bold')
+ax100.set_title('EOF1=84%, EOF2=50%')
+ax100.text(-0.05, 1.03, 'd.', transform=ax100.transAxes, size=14, weight='bold')
 
 
 
@@ -1226,10 +1226,10 @@ for ff in range(len(lowWaves)):
 ax100.set_xlim([0, 440])
 ax100.set_ylim([-50, 380])
 ax100.set_xlabel(r'Offshore Propagation $\Longrightarrow$',fontsize=10)
-ax100.set_ylabel(r'Onshore Propagation $\Longrightarrow$',fontsize=10)
+# ax100.set_ylabel(r'Onshore Propagation $\Longrightarrow$',fontsize=10)
 # ax100.set_title('Non-dimensional Fall Velocity < 6')
-ax100.set_title('EOF1=85%, EOF2=85%')
-ax100.text(-0.05, 1.03, 'a.', transform=ax100.transAxes, size=14, weight='bold')
+ax100.set_title('EOF1=84%, EOF2=84%')
+ax100.text(-0.05, 1.03, 'e.', transform=ax100.transAxes, size=14, weight='bold')
 
 
 
@@ -1355,10 +1355,10 @@ for ff in range(len(lowWaves)):
 ax100.set_xlim([0, 440])
 ax100.set_ylim([-50, 380])
 ax100.set_xlabel(r'Offshore Propagation $\Longrightarrow$',fontsize=10)
-ax100.set_ylabel(r'Onshore Propagation $\Longrightarrow$',fontsize=10)
+# ax100.set_ylabel(r'Onshore Propagation $\Longrightarrow$',fontsize=10)
 # ax100.set_title('Non-dimensional Fall Velocity < 6')
-ax100.set_title('EOF1=25%, EOF2=25%')
-ax100.text(-0.05, 1.03, 'a.', transform=ax100.transAxes, size=14, weight='bold')
+ax100.set_title('EOF1=35%, EOF2=35%')
+ax100.text(-0.05, 1.03, 'f.', transform=ax100.transAxes, size=14, weight='bold')
 
 
 
@@ -1480,7 +1480,7 @@ ax100.set_xlabel(r'Offshore Propagation $\Longrightarrow$',fontsize=10)
 ax100.set_ylabel(r'Onshore Propagation $\Longrightarrow$',fontsize=10)
 # ax100.set_title('Non-dimensional Fall Velocity < 6')
 ax100.set_title('EOF1=90%, EOF2=66%')
-ax100.text(-0.05, 1.03, 'a.', transform=ax100.transAxes, size=14, weight='bold')
+ax100.text(-0.05, 1.03, 'd.', transform=ax100.transAxes, size=14, weight='bold')
 
 
 

@@ -94,14 +94,14 @@ for tt in range(len(thetasMode1)):
             outerBarX[yy,tt] = np.max(xFRFbar)
             zOuterInd = np.where((np.round(2*np.max(xFRFbar))/2 == xinterpS))
             outerBarZ[yy,tt] = combined[zOuterInd[0]]
-            outerTroughZ[yy,tt] = np.max(xFRFtrough)
+            outerTroughX[yy,tt] = np.max(xFRFtrough)
             outerTroughZInd = np.where((np.round(2*np.max(xFRFtrough))/2 == xinterpS))
             outerTroughZ[yy,tt] = combined[outerTroughZInd[0]]
 
             innerBarX[yy,tt] = np.min(xFRFbar)
             zInnerInd = np.where((np.round(2*np.min(xFRFbar))/2 == xinterpS))
             innerBarZ[yy,tt] = combined[zInnerInd[0]]
-            innerTroughZ[yy,tt] = np.max(xFRFtrough)
+            innerTroughX[yy,tt] = np.max(xFRFtrough)
             innerTroughZInd = np.where((np.round(2*np.min(xFRFtrough))/2 == xinterpS))
             innerTroughZ[yy,tt] = combined[innerTroughZInd[0]]
 
@@ -228,11 +228,17 @@ conceptbar_ax.text(210,125,'Outer Bar')#,weight='bold')
 conceptbar_ax.text(210,110, 'Death')#,weight='bold')
 conceptbar_ax.arrow(x=290,y=60,dx=0,dy=40,width=4,facecolor='black',edgecolor='black')
 conceptbar_ax.arrow(x=290,y=60,dx=40,dy=0,width=4,facecolor='black',edgecolor='black')
+conceptbar_ax.text(302,90,'Single Bar ')#,weight='bold')
+conceptbar_ax.text(302,75, 'Decay')#,weight='bold')
+
+
 conceptbar_ax.arrow(x=250,y=230,dx=0,dy=40,width=4,facecolor='black',edgecolor='black')
 conceptbar_ax.arrow(x=250,y=230,dx=40,dy=0,width=4,facecolor='black',edgecolor='black')
 conceptbar_ax.text(262,260,'Single Bar from')#,weight='bold')
 conceptbar_ax.text(262,245, 'Inner Terrace')#,weight='bold')
 conceptbar_ax.text(-0.05, 1.02, 'd.', transform=conceptbar_ax.transAxes, size=14, weight='bold')
+
+
 
 ax31 = fig.add_axes([0.13,0.82,0.27,0.145])
 ax31.set_ylabel('Depth (m)')

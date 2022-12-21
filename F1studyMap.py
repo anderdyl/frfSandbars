@@ -203,11 +203,12 @@ def getArray(file):
     output['t'] = timeW
     return output
 
-wavedir26 = '/user/dylananderson/Documents/data/26mArrayPlus17/'
+wavedir26 = '/users/dylananderson/Documents/data/26mArrayPlus17/'
+
 # Need to sort the files to ensure correct temporal order...
 files = os.listdir(wavedir26)
 files.sort()
-files_path = [os.path.join(os.path.abspath(wavedir26), x) for x in files]
+files_path = [os.path.join(os.path.abspath(wavedir26), x) for x in files[1:]]
 array26m = Dataset(files_path[0])
 Hs26m = []
 Tp26m = []
